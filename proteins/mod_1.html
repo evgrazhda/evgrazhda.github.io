@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Quick self-contained page for a presentation. -->
+<head>
+  <title>Structures by protocols</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, 
+				 minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: #000022;
+    }
+
+    h3 {
+      color: lightgrey;
+    }
+
+    table {
+	align: center;  
+    }
+  </style>
+</head>
+<body>
+  <!-- NGL host.-->
+  <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+     
+  <!-- http://nglviewer.org/ngl/api/manual/usage/interaction-controls.html#automatic-view -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+	var stage = new NGL.Stage("viewport_template");
+	var pa;
+        stage.loadFile(
+         "https://raw.githubusercontent.com/evgrazhda/evgrazhda.github.io/master/proteins/data/1u19_A.pdb"
+	).then(
+            function (o) {
+		o.addRepresentation("cartoon");
+		stage.setSpin(true);
+		// o.setRotation([0, 3, 0]);
+		/*
+		var m = new NGL.Matrix4().fromArray([
+		    0.37052103877067566, -0.767203152179718, -0.523558497428894, 5.637778804792617,
+		    0.7545229196548462, 0.5773427486419678, -0.31204256415367126, -24.06012924949303,
+		    0.5416727066040039, -0.2794185280799866, 0.7927899956703186, 16.711468699356146,
+		    0.0, 0.0, 0.0, 1.0
+		]).transpose();
+		o.setTransform(m);
+		o.autoView(1000);*/
+		pa = o.structure.getPrincipalAxes();
+		stage.animationControls.rotate(pa.getRotationQuaternion(), 0);
+		o.setRotation([0.8, 3, 0]);
+		o.autoView(1000);
+		o.setScale(1.15);
+            });
+    });
+
+   // Yikes!
+   document.addEventListener("DOMContentLoaded", function () {
+	var stage = new NGL.Stage("viewport_target");
+	var pa;
+	stage.loadFile(
+	    "https://raw.githubusercontent.com/evgrazhda/evgrazhda.github.io/master/proteins/data/target.pdb"
+	).then(
+            function (o) {
+		// o.addRepresentation("cartoon", {color: "lightgrey"});
+		o.addRepresentation("cartoon", {color: "tomato"});
+		// o.addRepresentation("licorice", {colorScheme: "bfactor"});
+		// o.addRepresentation("cartoon", {color: "rgb(111, 222, 78)"});
+		o.autoView(1000);
+		pa = o.structure.getPrincipalAxes();
+		stage.animationControls.rotate(pa.getRotationQuaternion(), 1500);
+		stage.setSpin(true);
+		o.setRotation([0, 3, 0]);
+            });
+   });
+
+
+  </script>
+
+  <table align="center">
+    <tr height="650">
+      <td>
+        <div id="viewport_template" style="height: 600px; width: 600px;">
+          <h3 align="center"> Template: 1u19 (Rhodopsin) </h3>
+        </div>
+      </td>
+
+      <td>
+        <div id="viewport_target" style="height: 600px; width: 600px;">
+          <h3 align="center"> Target: 3ny8 (&beta;2 adr) </h3>
+        </div>
+      </td>    
+    </tr>
+  </table>
+
+
+</body>
+</html>
