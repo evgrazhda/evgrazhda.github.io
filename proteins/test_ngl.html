@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Some structures by protocols</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, 
+				 minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- NGL hoster.-->
+  <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
+   
+  
+  <!-- <script> -->
+  <!--   // Datasources -->
+  <!--   NGL.DatasourceRegistry.add("data", new NGL.StaticDatasource("./data/")) -->
+  <!--   var stage; -->
+  <!--   document.addEventListener("DOMContentLoaded", function () { -->
+  <!--     stage = new NGL.Stage("viewport") -->
+  <!--     var load = NGL.getQuery("load") -->
+  <!--     if (load) stage.loadFile(load, {defaultRepresentation: true}) -->
+  <!--     var script = NGL.getQuery("script") -->
+  <!--     if (script) stage.loadScript("./scripts/" + script + ".js") -->
+  <!--   }) -->
+  <!--   stage.loadFile("1u19", {defaultRepresentation: true}); -->
+  <!-- </script> -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var stage = new NGL.Stage("viewport");
+    stage.loadFile(
+      "https://raw.githubusercontent.com/CDD-Hub/HB-Modeling/master/4GRV.pdb",
+      {defaultRepresentation: true});
+    });
+  </script>
+
+  
+  <div id="viewport" style="width:800px; height:800px;"></div>
+</body>
+</html>
