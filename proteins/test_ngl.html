@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Quick self-contained page for a presentation. -->
 <head>
-  <title>Some structures by protocols</title>
+  <title>Structures by protocols</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, 
 				 minimum-scale=1.0, maximum-scale=1.0">
@@ -12,38 +13,70 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background-color: #000022;
     }
+
+    h3 {
+	color: lightgrey;
+    }
+
   </style>
 </head>
 <body>
-  <!-- NGL hoster.-->
+  <!-- NGL host.-->
   <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
-   
-  
-  <!-- <script> -->
-  <!--   // Datasources -->
-  <!--   NGL.DatasourceRegistry.add("data", new NGL.StaticDatasource("./data/")) -->
-  <!--   var stage; -->
-  <!--   document.addEventListener("DOMContentLoaded", function () { -->
-  <!--     stage = new NGL.Stage("viewport") -->
-  <!--     var load = NGL.getQuery("load") -->
-  <!--     if (load) stage.loadFile(load, {defaultRepresentation: true}) -->
-  <!--     var script = NGL.getQuery("script") -->
-  <!--     if (script) stage.loadScript("./scripts/" + script + ".js") -->
-  <!--   }) -->
-  <!--   stage.loadFile("1u19", {defaultRepresentation: true}); -->
-  <!-- </script> -->
+     
+  <!-- http://nglviewer.org/ngl/api/manual/usage/interaction-controls.html#automatic-view -->
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      var stage = new NGL.Stage("viewport");
-    stage.loadFile(
-      "https://raw.githubusercontent.com/CDD-Hub/HB-Modeling/master/4GRV.pdb",
-      {defaultRepresentation: true});
+	var stage = new NGL.Stage("viewport");
+	var pa;
+	stage.loadFile(
+	    "https://raw.githubusercontent.com/CDD-Hub/HB-Modeling/master/4GRV.pdb"
+	).then(
+            function (o) {
+		o.addRepresentation("cartoon");
+		o.autoView(1000);
+		pa = o.structure.getPrincipalAxes();
+		stage.animationControls.rotate(pa.getRotationQuaternion(), 1500);
+		stage.setSpin(true);
+            });
+    });
+
+   // Yikes!
+   document.addEventListener("DOMContentLoaded", function () {
+	var stage = new NGL.Stage("viewport2");
+	var pa;
+	stage.loadFile(
+	    "rcsb://1u19"
+	).then(
+            function (o) {
+		// o.addRepresentation("cartoon", {color: "lightgrey"});
+		o.addRepresentation("cartoon", {color: "tomato"});
+		// o.addRepresentation("licorice", {colorScheme: "bfactor"});
+		// o.addRepresentation("cartoon", {color: "rgb(111, 222, 78)"});
+		o.autoView(1000);
+		pa = o.structure.getPrincipalAxes();
+		stage.animationControls.rotate(pa.getRotationQuaternion(), 1500);
+		stage.setSpin(true);
+            });
     });
   </script>
 
-  
-  <div id="viewport" style="width:800px; height:800px;"></div>
+  <!--
+    <div id="viewport" style="width:800px; height:800px;"></div>
+    <div id="viewport2" style="width:800px; height:800px;"></div>
+  -->
+
+  <div style="width: 100%; overflow: hidden;">
+    <div id="viewport" style="width: 600px; height: 650px; float: left;">
+      <h3 align="center"> Template: 1u19 (Rhodopsin) </h3>
+    </div>
+    <div id="viewport2" style="margin-left: 602px; height: 650px;">
+    <h3 align="center"> Target: 3ny8 (&beta;2 adr) </h3>
+    </div>
+  </div>
+    
 </body>
 </html>
